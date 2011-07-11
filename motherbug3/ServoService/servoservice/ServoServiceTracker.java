@@ -61,7 +61,7 @@ public class ServoServiceTracker extends AbstractServiceTracker implements Servl
 		camera = (ICameraDevice) this.getService(ICameraDevice.class);
 		camera_control = (ICameraModuleControl) this.getService(ICameraModuleControl.class);
 		vh_serial = (IVonHippelSerialPort) this.getService(IVonHippelSerialPort.class);
-		servlet = new ServoServlet();
+		servlet = new ServoServlet(context);
 		CaptureHttpContext capcon =  new CaptureHttpContext(context);
 		
 		servlet.setVonHippelSerialPort(vh_serial);

@@ -10,11 +10,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.osgi.service.log.LogService;
 
+import com.buglabs.application.ServiceTrackerHelper;
 import com.buglabs.application.ServiceTrackerHelper.ManagedRunnable;
 import com.buglabs.bug.module.camera.pub.ICamera2Device;
 import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
@@ -31,6 +33,10 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 	private BundleContext context;
 	private ServoServlet servlet; 
 	
+	public ServoApplication(BundleContext c){
+		context=c;
+	}
+	
 	public void run(Map<Object, Object> services) {
 		
 		System.out.println("__panda");
@@ -39,9 +45,9 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 		camera_control = (ICameraModuleControl) services.get(ICameraModuleControl.class.getName());
 		vh_serial = (IVonHippelSerialPort) services.get(IVonHippelSerialPort.class.getName());
 		
-		Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
+		//Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
 		
-		servlet = new ServoServlet();
+		servlet = new ServoServlet(context);
 		CaptureHttpContext capcon =  new CaptureHttpContext(context);
 		
 		servlet.setVonHippelSerialPort(vh_serial);
@@ -55,7 +61,12 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 			
 		} catch (NamespaceException e) {
 			e.printStackTrace();
+
 		}
+		
+		context.registerService(ServoServlet.class.getName(), servlet, null);
+    	
+		
 	}
 
 	public void shutdown() {

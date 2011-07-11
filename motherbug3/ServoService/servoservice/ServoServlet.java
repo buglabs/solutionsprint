@@ -27,6 +27,7 @@ import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
 import com.buglabs.bug.module.vonhippel.pub.IVonHippelSerialPort;
 import com.buglabs.services.ws.IWSResponse;
 import com.buglabs.services.ws.PublicWSDefinition;
+import com.buglabs.services.ws.PublicWSProvider;
 import com.buglabs.services.ws.PublicWSProvider2;
 import com.buglabs.services.ws.PublicWSProviderWithParams;
 import com.buglabs.application.ServiceTrackerHelper.ManagedRunnable;
@@ -50,15 +51,18 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	private HttpService http_service;
 	public static final String CAPTURE_ALIAS = "/servoresource";
 	
+	ServoServlet (BundleContext c){
+		c.registerService(PublicWSProvider.class.getName(), this, null);
+	}
+	
 	/**
 	 * handle GET request 
 	 * 
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		System.out.println("hi");
-		//see who's doing the reqeust.  sucks with NAT
+
+		//see who's doing the request.  sucks with NAT
 		
 		System.out.println(req.getRemoteHost());
 		System.out.println(req.getRemoteAddr());
@@ -297,7 +301,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 		if (operation == PublicWSProvider2.GET) {
 			return new IWSResponse() {
 				public Object getContent() {
-					
+					System.out.println("omgimonfire");
   					StringWriter writer = new StringWriter(); 
 
   					// if no param, make a list of configs
@@ -444,6 +448,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	public void run(Map<Object, Object> services) {
+		System.out.println("panda");
 		// TODO Auto-generated method stub
 		
 	}
