@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="com.buglabs.osgi.concierge.jdt.ConciergeClasspathContainerInitializer"/>
+	<classpathentry kind="con" path="com.buglabs.osgi.concierge.jdt.OSGiBundleClassPathContainerInitializer"/>
+	<classpathentry kind="con" path="com.buglabs.dragonfly.jdt.BugClasspathContainerInitializer"/>
+	<classpathentry kind="con" path="com.buglabs.phoneme.personal.PhoneMEClasspathContainer"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/panda/Downloads/eclipse/plugins/org.eclipse.osgi_3.6.2.R36x_v20110210.jar" sourcepath="/home/panda/Downloads/eclipse/plugins/org.eclipse.osgi.source_3.6.2.R36x_v20110210.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/panda/Downloads/eclipse/plugins/org.eclipse.platform.doc.isv_3.6.2.r362_v20110111.jar!/reference/api"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/osgi/framework/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="output" path=""/>
+</classpath>
