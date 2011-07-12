@@ -39,7 +39,6 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 	
 	public void run(Map<Object, Object> services) {
 		
-		System.out.println("__panda");
 		http_service = (HttpService) services.get(HttpService.class.getName());
 		camera = (ICamera2Device) services.get(ICamera2Device.class.getName());
 		camera_control = (ICameraModuleControl) services.get(ICameraModuleControl.class.getName());

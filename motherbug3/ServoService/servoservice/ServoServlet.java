@@ -160,6 +160,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	private void writeError(PrintWriter writer) {
+		System.out.println("writing error 1");
 		ClassLoader cl = getClass().getClassLoader();
 	    URL url = cl.getResource("/resources/error1.html");	    
 	    BufferedReader in;
@@ -279,6 +280,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	private void writeError2(StringWriter writer) {
+		System.out.println("writing error 2");
 		ClassLoader cl = getClass().getClassLoader();
 	    URL url = cl.getResource("/resources/error2.html");	    
 	    BufferedReader in;
@@ -297,11 +299,9 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 	
 	public IWSResponse execute(int operation, String input, final Map get, Map post)  {
-		System.out.println("execute");
 		if (operation == PublicWSProvider2.GET) {
 			return new IWSResponse() {
 				public Object getContent() {
-					System.out.println("omgimonfire");
   					StringWriter writer = new StringWriter(); 
 
   					// if no param, make a list of configs
@@ -398,6 +398,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 						e.printStackTrace();
 					}
 					
+					System.out.println("writing index.html");
 					ClassLoader cl = getClass().getClassLoader();
 				    URL url = cl.getResource("/resources/index.html");	    
 				    BufferedReader in;

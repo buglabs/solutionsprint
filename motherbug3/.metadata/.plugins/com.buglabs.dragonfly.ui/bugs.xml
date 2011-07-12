@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bugs/>
+<bugs>
+<bug name="panda" url="http://192.168.0.190"/>
+</bugs>
