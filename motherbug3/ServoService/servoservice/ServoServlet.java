@@ -1,10 +1,16 @@
 package servoservice;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -51,6 +57,13 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	private HttpService http_service;
 	public static final String CAPTURE_ALIAS = "/servoresource";
 	
+	private SerialPort port;
+	private CommPortIdentifier comm;
+	private InputStream is;
+	private OutputStream os;
+	private PrintWriter out;
+	private boolean shutdown = false;
+	
 	ServoServlet (BundleContext c){
 		c.registerService(PublicWSProvider.class.getName(), this, null);
 	}
@@ -62,8 +75,8 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		System.out.println("this is doget");
 		//see who's doing the request.  sucks with NAT
-		
 		System.out.println(req.getRemoteHost());
 		System.out.println(req.getRemoteAddr());
 
@@ -161,7 +174,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	private void writeError(PrintWriter writer) {
 		System.out.println("writing error 1");
 		ClassLoader cl = getClass().getClassLoader();
-	    URL url = cl.getResource("/resources/error1.html");	    
+	    URL url = cl.getResource("/resources/index.html");	    
 	    BufferedReader in;
 		try {
 			in = new BufferedReader(
@@ -253,10 +266,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	 */
 	public HttpService getHttpService() {
 		return http_service;
-	}
-	
-	
-	
+	}	
 
 	public void setPublicName(String name) {
 	}
@@ -280,7 +290,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	private void writeError2(StringWriter writer) {
 		System.out.println("writing error 2");
 		ClassLoader cl = getClass().getClassLoader();
-	    URL url = cl.getResource("/resources/error2.html");	    
+	    URL url = cl.getResource("/resources/index.html");	    
 	    BufferedReader in;
 		try {
 			in = new BufferedReader(
@@ -295,10 +305,51 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 		}
 	}
 	
+	private boolean connectPort(){
+		System.out.println("connecting");
+		try {
+			System.out.println("try connect port");
+			comm = CommPortIdentifier.getPortIdentifier("/dev/ttyBMI2");
+		} catch (NoSuchPortException e1) {
+			System.out.println("[Bugduino] Port cannot be found");
+			e1.printStackTrace();
+			return false;
+		}
+		try {
+			System.out.println("try 2");
+			port = (SerialPort)comm.open("bugduino", 1000);
+			port.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+			port.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+			is = port.getInputStream();
+			os = port.getOutputStream();
+			out = new PrintWriter(os, true);
+
+
+		} catch (PortInUseException e2) {
+			System.err.println("[Bugduino] port in use");
+			return false;
+		} catch (IOException e2) {
+			System.err.println("[Bugduino] Can't get input stream");
+			return false;
+		} catch (Exception e){
+			System.err.println("[Bugduino] Unknown error!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public void set(String degree) {
+		System.out.println("settings");
+		out.write(degree);
+		out.flush();
+	}
+	
 	public IWSResponse execute(int operation, String input, final Map get, Map post)  {
 		if (operation == PublicWSProvider2.GET) {
 			return new IWSResponse() {
 				public Object getContent() {
+					System.out.println("I believe this is execute");
   					StringWriter writer = new StringWriter(); 
 
   					// if no param, make a list of configs
@@ -320,45 +371,10 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
   					int integerOut = (int) map(degrees, 0, 180, 0, 9);
   					char c = Integer.toString(integerOut).charAt(0);
   					
-  					//figure out which vm we're running on
-  					//and figure out whether to try using VH serial APIS or just basic FileIO to control the servo
-  					//the codeblock below just writes a value out through the VonHippel to control a servo
-  					//This can be removed for other contexts
-  					System.out.println(System.getProperty("java.vm.name"));
-  					System.out.println(System.getProperty("java.version"));
-  					
-  					System.out.println("turning cam " + degrees + " degrees yo");
-  					
-  					ServiceReference sr = bundleContext.getServiceReference(IVonHippelSerialPort.class.getName());
-  					String slotNum = (String) sr.getProperty("Slot");
-  					System.out.println("Slot: "+slotNum);
-  					if (System.getProperty("java.vm.name").indexOf("CVM")>-1){
-  						OutputStream os;
-						try {
-							os = vhsp.getSerialOutputStream();
-							os.write(c);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-  						
-  					}
-  					else{
-  						sr = bundleContext.getServiceReference(IVonHippelSerialPort.class.getName());
-  						slotNum = (String) sr.getProperty("Slot");
-  						System.out.println(slotNum);
-  						OutputStream os;
-						try {
-							os = new FileOutputStream(new File("/dev/ttymxc"+Integer.parseInt(slotNum)));
-							os.write(c);
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-  						
-  					}
+  					System.out.println("inb4set");
+  					connectPort();
+  					set(degrees + "\n");
+  					System.out.println("afterset");
 					
 					System.out.println("writing index.html");
 					ClassLoader cl = getClass().getClassLoader();
@@ -374,7 +390,8 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 				      in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
-					} 					
+					} 				
+					System.out.println(writer.toString());
   					return writer.toString(); 
 				}
 				public int getErrorCode() {
@@ -411,10 +428,20 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	public void run(Map<Object, Object> services) {
-		System.out.println("panda");	
+		System.out.println("panda");
 	}
 
-	public void shutdown() {		
+	public void shutdown() {
+		shutdown = true;
+		out.write("Q\r\n");
+		out.flush();
+		try {
+			is.close();
+			os.close();
+			port.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

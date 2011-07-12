@@ -39,17 +39,16 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 	
 	public void run(Map<Object, Object> services) {
 		
+		System.out.println("hi");
 		http_service = (HttpService) services.get(HttpService.class.getName());
 		camera = (ICamera2Device) services.get(ICamera2Device.class.getName());
 		camera_control = (ICameraModuleControl) services.get(ICameraModuleControl.class.getName());
-		vh_serial = (IVonHippelSerialPort) services.get(IVonHippelSerialPort.class.getName());
 		
-		Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
+		//Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
 		
 		servlet = new ServoServlet(context);
 		CaptureHttpContext capcon =  new CaptureHttpContext(context);
 		
-		servlet.setVonHippelSerialPort(vh_serial);
 		servlet.setCamera(camera);
 		servlet.setCameraModuleControl(camera_control);
 		servlet.setBundleContext(context);
@@ -64,6 +63,7 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 		}
 		
 		context.registerService(ServoServlet.class.getName(), servlet, null);
+		//context.registerService(servo_controller.class.getName(), servlet, null);
     	
 		
 	}
