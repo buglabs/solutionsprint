@@ -1369,3 +1369,87 @@ org.eclipse.core.runtime.AssertionFailedException: unknown saveable: org.eclipse
 
 !ENTRY com.buglabs.dragonfly 1 0 2011-07-12 11:46:37.382
 !MESSAGE Bug Device Removed - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 11:51:24.255
+!MESSAGE BUG Device Added - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 11:51:24.258
+!MESSAGE Bug Device Resolved - bug20-2 192.168.0.197
+
+!ENTRY com.buglabs.dragonfly.ui 4 0 2011-07-12 12:06:03.566
+!MESSAGE Unable to locate the BUG you selected.  Perhaps it is no longer connected.
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:18:31.836
+!MESSAGE Bug Device Removed - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:25:40.488
+!MESSAGE BUG Device Added - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:25:40.489
+!MESSAGE Bug Device Resolved - bug20-2 192.168.0.197
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:29:21.971
+!MESSAGE Bug Device Removed - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:31:03.386
+!MESSAGE BUG Device Added - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 12:31:03.387
+!MESSAGE Bug Device Resolved - bug20-2 192.168.0.197
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:27:28.063
+!MESSAGE Bug Device Removed - bug20-3
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:36:46.549
+!MESSAGE BUG Device Added - bug20
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:36:47.211
+!MESSAGE Bug Device Resolved - bug20 192.168.0.179
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:36:47.773
+!MESSAGE Bug Device Removed - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:36:47.780
+!MESSAGE BUG Device Added - bug20-2
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:36:47.789
+!MESSAGE Bug Device Resolved - bug20-2 192.168.0.197
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:41:04.389
+!MESSAGE BUG Device Added - bug20-3
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:41:04.390
+!MESSAGE Bug Device Resolved - bug20-3 192.168.0.159
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:42:26.984
+!MESSAGE Bug Device Removed - bug20-3
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:44:10.146
+!MESSAGE BUG Device Added - bug20-3
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:44:10.151
+!MESSAGE Bug Device Resolved - bug20-3 192.168.0.159
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:44:10.151
+!MESSAGE Bug Device Resolved - bug20-3 192.168.0.159
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:44:10.152
+!MESSAGE Bug w/ same ip as bug20-3 exists: bug20-3
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:48:34.895
+!MESSAGE BUG Device Added - bug20-4
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:48:34.896
+!MESSAGE Bug Device Resolved - bug20-4 192.168.0.179
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:48:34.897
+!MESSAGE Bug Device Resolved - bug20-4 192.168.0.179
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:48:34.897
+!MESSAGE Bug w/ same ip as bug20-4 exists: bug20-4
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:48:34.898
+!MESSAGE Bug w/ same ip as bug20-4 exists: bug20-4
+
+!ENTRY com.buglabs.dragonfly 1 0 2011-07-12 13:58:44.433
+!MESSAGE Bug Device Removed - bug20-3

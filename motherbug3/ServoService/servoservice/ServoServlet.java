@@ -154,7 +154,6 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	          writer.write(inputLine);
 	      in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -173,7 +172,6 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	          writer.write(inputLine);
 	      in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -293,7 +291,6 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	          writer.write(inputLine);
 	      in.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -329,6 +326,9 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
   					//This can be removed for other contexts
   					System.out.println(System.getProperty("java.vm.name"));
   					System.out.println(System.getProperty("java.version"));
+  					
+  					System.out.println("turning cam " + degrees + " degrees yo");
+  					
   					ServiceReference sr = bundleContext.getServiceReference(IVonHippelSerialPort.class.getName());
   					String slotNum = (String) sr.getProperty("Slot");
   					System.out.println("Slot: "+slotNum);
@@ -359,44 +359,6 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 						}
   						
   					}
-
-
-  					//read image from cam and write it to a file for imagemagick to convert
-  					byte[] jpeg = cam.grabFull();
-  					FileOutputStream fos;
-					try {
-						fos = new FileOutputStream(new
-						File("/tmp/image.jpg"));
-	  					fos.write(jpeg, 0, jpeg.length);						
-					} catch (FileNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-  					//System.out.println("Wrote image");
-  					
-  					//Get a file that's findable from our context
-  					File resizedFile = bundleContext.getDataFile("image-new.jpg");
-  					//System.out.println("Resizing to "+ resizedFile.getAbsolutePath());
-  					
-  					//shell out to imagemagick to do conversion, result is stored in file 
-  					//received from getDateFile()
-  					Process p;
-					try {
-						p = Runtime.getRuntime().exec(
-								new String[] { "convert", "-resize", "400x300", "-rotate", "270",
-										"/tmp/image.jpg", resizedFile.getAbsolutePath() });
-						int t;
-						t = p.waitFor();
-						System.out.println(t);
-	 					Date d = new Date();
-	  					p = Runtime.getRuntime().exec(new String[]{"cp", resizedFile.getAbsolutePath(), "/home/root/"+Long.toString(d.getTime())+".jpeg"});
-	  					p.waitFor();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					
 					System.out.println("writing index.html");
 					ClassLoader cl = getClass().getClassLoader();
@@ -449,14 +411,10 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	public void run(Map<Object, Object> services) {
-		System.out.println("panda");
-		// TODO Auto-generated method stub
-		
+		System.out.println("panda");	
 	}
 
-	public void shutdown() {
-		// TODO Auto-generated method stub
-		
+	public void shutdown() {		
 	}
 
 }

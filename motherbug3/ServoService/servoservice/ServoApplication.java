@@ -44,13 +44,13 @@ public class ServoApplication implements ManagedRunnable, Servlet{
 		camera_control = (ICameraModuleControl) services.get(ICameraModuleControl.class.getName());
 		vh_serial = (IVonHippelSerialPort) services.get(IVonHippelSerialPort.class.getName());
 		
-		//Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
+		Activator.getLogger().log(LogService.LOG_INFO, this.getClass().getName() + " has started!");
 		
 		servlet = new ServoServlet(context);
 		CaptureHttpContext capcon =  new CaptureHttpContext(context);
 		
 		servlet.setVonHippelSerialPort(vh_serial);
-		//servlet.setCamera(camera);
+		servlet.setCamera(camera);
 		servlet.setCameraModuleControl(camera_control);
 		servlet.setBundleContext(context);
 		servlet.setHttpService(http_service);

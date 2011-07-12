@@ -58,7 +58,7 @@ int getFullsGrabbed() {
 return fullsGrabbed;
 }
 cam(BundleContext c){
-	c.registerService(PublicWSProvider.class.getName(), this, null);
+	c.registerService(PublicWSProvider2.class.getName(), this, null);
 }
 
 public final void run(final Map<Object, Object> services) {
