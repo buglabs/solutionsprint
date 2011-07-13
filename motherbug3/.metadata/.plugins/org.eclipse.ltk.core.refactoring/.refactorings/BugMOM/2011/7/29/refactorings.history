@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete 3 elements from project &apos;BugMOM&apos;&#x0A;- Original project: &apos;BugMOM&apos;&#x0A;- Original elements:&#x0A;     BugMOM/bugmom.ServoService&#x0A;     BugMOM/bugmom.ServoService.resources&#x0A;     BugMOM/bugmom.ServoService.servoservice" description="Delete elements" element1="/&lt;bugmom.ServoService.servoservice" element2="/&lt;bugmom.ServoService.resources" element3="/&lt;bugmom.ServoService" elements="3" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1310409184603" subPackages="false" version="1.0"/>
-</session>
