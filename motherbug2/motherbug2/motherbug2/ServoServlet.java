@@ -27,6 +27,7 @@ import org.osgi.service.http.HttpService;
 
 import com.buglabs.bug.module.camera.pub.ICamera2Device;
 import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
+import com.buglabs.bug.module.gps.pub.LatLon;
 import com.buglabs.bug.module.vonhippel.pub.IVonHippelSerialPort;
 import com.buglabs.services.ws.IWSResponse;
 import com.buglabs.services.ws.PublicWSDefinition;
@@ -72,7 +73,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
-
+		System.out.println("this is doget");
 		//see who's doing the request.  sucks with NAT
 		System.out.println(req.getRemoteHost());
 		System.out.println(req.getRemoteAddr());
@@ -93,7 +94,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 		else
 			degrees = -1;
 		System.out.println(param);
-		
+
 		if (degrees < 0 || degrees > 180) {
 			writeError(writer);
 			return;
@@ -295,6 +296,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 		if (operation == PublicWSProvider2.GET) {
 			return new IWSResponse() {
 				public Object getContent() {
+					System.out.println("execute");
 					StringWriter writer = new StringWriter(); 
 
 					// if no param, make a list of configs
@@ -311,7 +313,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 						degrees = Integer.parseInt(param);
 					else
 						degrees = -1;
-			
+
 					if (degrees < 0 || degrees > 180) {
 						writeError2(writer);
 						return writer.toString();
@@ -321,9 +323,39 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 					char c = Integer.toString(integerOut).charAt(0);
 
 					System.out.println("inb4set");
+
+					/*					while (!connectPort()){
+						if (shutdown)
+							shutdown();
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}*/
 					connectPort();
 					set(degrees + "\n");
 					System.out.println("afterset");
+
+					try{
+						switch(( cmc).getSelectedCamera()) {
+						case 0:
+							System.out.println("slot 0!");
+							break;
+						case 1:
+							System.out.println("slot 1!");
+							break;
+						case 2:
+							System.out.println("slot 2!");
+							break;
+						case 3:
+							System.out.println("slot 3!");
+							break;
+						}
+					} catch (Exception e){
+						e.printStackTrace();
+					}
+
 
 					System.out.println("writing index.html");
 					ClassLoader cl = getClass().getClassLoader();
@@ -377,7 +409,15 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	public void run(Map<Object, Object> services) {
-
+		/*		while (!connectPort()){
+			if (shutdown)
+				shutdown();
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}*/
 	}
 
 	public void shutdown() {
