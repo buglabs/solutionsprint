@@ -61,7 +61,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	private PrintWriter out;
 	private boolean shutdown = false;
 
-	ServoServlet (BundleContext c){
+	public ServoServlet (BundleContext c){
 		c.registerService(PublicWSProvider.class.getName(), this, null);
 	}
 
