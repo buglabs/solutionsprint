@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: motherbug3
-Bundle-Activator: motherbug3.Activator
+Bundle-Name: motherbug2
+Bundle-Activator: motherbug2.Activator
 Bundle-SymbolicName: motherbug2
 Bundle-Version: 1.0.0
 Bundle-Vendor: interns
