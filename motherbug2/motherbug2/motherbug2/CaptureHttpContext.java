@@ -1,4 +1,4 @@
-package motherbug3;
+package motherbug2;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
