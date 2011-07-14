@@ -6,7 +6,6 @@ Bundle-SymbolicName: motherbug2
 Bundle-Version: 1.0.0
 Bundle-Vendor: interns
 Bug-Bundle-Type: Application
-BUG-API-Version: 2.0.2
 Import-Package: org.osgi.service.http,
  org.osgi.framework,
  org.osgi.util.tracker,
@@ -22,6 +21,4 @@ Import-Package: org.osgi.service.http,
  com.buglabs.bug.base.pub,
  org.osgi.util.measurement,
  org.osgi.util.position
-
-
-
+BUG-API-Version: 2.0.2
