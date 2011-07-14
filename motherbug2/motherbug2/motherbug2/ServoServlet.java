@@ -55,7 +55,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	"amp;z=14&amp;ll=" + lat+","+lon+"&amp;output=embed\"></iframe><br /><small><a href=\"http://maps.google.com/maps?client=" +
 	"ubuntu&amp;channel=cs&amp;q=" + lat+","+lon+"&amp;ie=UTF8&amp;hq=&amp;hnear=0x89c2598fa621eaef:0x29339a172316e930,%" +
 	"2B40%C2%B0+43'+30.66%22,+-73%C2%B0+59'+48.99%22&amp;gl=us&amp;z=14&amp;ll=" + lat+","+lon+"&amp;source=embed\" style=\"" +
-	"color:#0000FF;text-align:left\">View Larger Map</a></small>\"";
+	"color:#0000FF;text-align:left\">View Larger Map</a></small>";
 	private IPositionProvider gps;
 	public ServoServlet (BundleContext c){
 		c.registerService(PublicWSProvider.class.getName(), this, null);
@@ -172,11 +172,16 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 					new InputStreamReader(
 							url.openStream()));
 			String inputLine;
-			while ((inputLine = in.readLine()) != null)
-				writer.write(inputLine);
-			writer.write(map);
-			writer.write("</body>");
-			writer.write("</html>");
+			while ((inputLine = in.readLine()) != null){
+				writer.write(inputLine+"\n");
+			}
+			
+			writer.write("<input type=\"range\"  min=\"0\" max=\"180\" name =\"degree\"/>");
+			writer.write("<input type=\"submit\" value=\"Submit\" />\n");
+			writer.write("</form>\n");
+			writer.write(map+"\n");
+			writer.write("</body>\n");
+			writer.write("</html>\n");
 			System.out.println(writer.toString());
 			in.close();
 		} catch (IOException e) {
@@ -231,11 +236,16 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 										url.openStream()));
 						String inputLine;
 						while ((inputLine = in.readLine()) != null){
-							writer.write(inputLine);
+							writer.write(inputLine+"\n");
 						}
-						writer.write(map);
-						writer.write("</body>");
-						writer.write("</html>");
+						
+						
+						writer.write("<input type=\"range\"  min=\"0\" max=\"180\" name =\"degree\"+ value =\""+degrees+ "\"/>");
+						writer.write("<input type=\"submit\" value=\"Submit\" />\n");
+						writer.write("</form>\n");
+						writer.write(map+"\n");
+						writer.write("</body>\n");
+						writer.write("</html>\n");
 
 						in.close();
 					} catch (IOException e) {
@@ -297,8 +307,5 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 			return false;
 		}
 	}
-
-
-
 
 }
