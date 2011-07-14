@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tractor
+Bundle-Activator: motherbug2.Activator
+Bundle-SymbolicName: Tractor
+Bundle-Version: 1.0.0
+Bundle-Vendor: interns
+Bug-Bundle-Type: Application
+BUG-API-Version: 2.0.2
+Import-Package: org.osgi.service.http,org.osgi.framework,org.osgi.util
+ .tracker,com.buglabs.application,com.buglabs.util,javax.servlet,javax
+ .servlet.http,com.buglabs.bug.module.camera.pub,com.buglabs.bug.modul
+ e.vonhippel.pub,com.buglabs.services.ws,gnu.io,com.buglabs.bug.module.gps.pub
+
