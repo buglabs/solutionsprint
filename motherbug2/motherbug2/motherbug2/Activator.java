@@ -9,6 +9,8 @@ import org.osgi.service.log.LogService;
 import com.buglabs.application.ServiceTrackerHelper;
 import com.buglabs.bug.module.camera.pub.ICamera2Device;
 import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
+import com.buglabs.bug.module.gps.pub.IPositionProvider;
+
 import org.osgi.util.tracker.ServiceTracker;
 
 
@@ -17,7 +19,8 @@ public class Activator implements BundleActivator {
 	private static final String [] services = {					
 		ICamera2Device.class.getName(),
 		ICameraModuleControl.class.getName(),
-		HttpService.class.getName()
+		HttpService.class.getName(),
+		IPositionProvider.class.getName()
 	};	
 	private ServiceTracker serviceTracker;
 	public void start(BundleContext context) throws Exception {

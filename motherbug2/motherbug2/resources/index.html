@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 <head>
 <link rel="shortcut icon" href="../favicon.ico">
@@ -5,11 +6,9 @@
 <head/>
 <body>
 <center>
-<img src="http://motherbug2.local/service/mom_ping" width="480" height="360"/>
+<img src="/service/mom_ping" width="480" height="360"/>
 <form name="input" action="Servo" method="get">
-Degrees to rotate BUG (value between 0 and 180)<br/>
-<input type="text" name="degree" />
+Degree between 0 and 180 </br>
+<input type="range"  min="0" max="180" name ="degree"/>
 <input type="submit" value="Submit" />
 </form>
-</body>
-</html>
