@@ -35,7 +35,7 @@ import com.buglabs.application.ServiceTrackerHelper.ManagedRunnable;
  * 
  * Update: AK 2009-12-16 quick update-- change to PublicWSProviderWithParams
  */
-public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable{
+public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable, servo_controller{
 
 	public static final String ALIAS = "Servo";
 	private static final long serialVersionUID = 1L;
@@ -133,7 +133,7 @@ public class ServoServlet implements PublicWSProviderWithParams, ManagedRunnable
 	}
 
 	public void set(String degree) {
-
+System.out.println("Setting "+degree);
 		out.write(degree);
 		out.flush();
 	}

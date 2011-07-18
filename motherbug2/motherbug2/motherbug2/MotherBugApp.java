@@ -26,7 +26,7 @@ import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
 import com.buglabs.bug.module.gps.pub.IPositionProvider;
 
 
-public class MotherBugApp implements ManagedRunnable {
+public class MotherBugApp implements ManagedRunnable, servo_controller {
 
 	private HttpService http_service;
 	private ICameraModuleControl camera_control;
@@ -157,5 +157,11 @@ public class MotherBugApp implements ManagedRunnable {
 	public void destroy() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void set(String degree) {
+		// TODO Auto-generated method stub
+		
 	}
 }

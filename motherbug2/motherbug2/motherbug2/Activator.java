@@ -5,7 +5,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.log.LogService;
 
-
 import com.buglabs.application.ServiceTrackerHelper;
 import com.buglabs.bug.module.camera.pub.ICamera2Device;
 import com.buglabs.bug.module.camera.pub.ICameraModuleControl;
@@ -26,6 +25,7 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		// TODO Auto-generated method stub
 		MotherBugApp app = new MotherBugApp (context);
+		context.registerService(servo_controller.class.getName(), app, null);
 		serviceTracker = ServiceTrackerHelper.openServiceTracker(context, services, app);
 	
 	}
