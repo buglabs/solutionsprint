@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: mb2image
+Bundle-Activator: mb2image.Activator
+Bundle-SymbolicName: mb2image
+Bundle-Version: 1.0.0
+Bundle-Vendor: RMB
+Bug-Bundle-Type: Application
+BUG-API-Version: 2.0.2
+Import-Package: com.buglabs.application,com.buglabs.bug.module.lcd.pub
+ ,com.buglabs.bug.module.camera.pub,com.buglabs.util,com.buglabs.devic
+ e,javax.swing,javax.imageio,org.osgi.framework,org.osgi.util.tracker
+
