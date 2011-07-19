@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bug-Bundle-Type: Application
+Bundle-Vendor: RMB
+Bundle-Version: 1.0.0
+BUG-API-Version: 2.0.2
+Bundle-Name: mb2controller
+Bundle-Activator: mb2controller.Activator
+Bundle-ManifestVersion: 2
+Import-Package: com.buglabs.application,com.buglabs.device,com.buglabs
+ .util,gnu.io,org.osgi.framework,org.osgi.service.log,org.osgi.util.tr
+ acker
+Bundle-SymbolicName: mb2controller
+
