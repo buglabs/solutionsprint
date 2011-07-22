@@ -1,0 +1,10 @@
+{
+  "name": "hiya",
+  "version": "0.0.1",
+  "description": "solution",
+
+  "dependencies":{
+    "express": "2.4.2",
+  }
+
+}
