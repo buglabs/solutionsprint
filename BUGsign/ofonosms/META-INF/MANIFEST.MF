@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ofonosms
+Bundle-Activator: ofonosms.Activator
+Bundle-SymbolicName: ofonosms
+Bundle-Version: 1.0.0
+Bundle-Vendor: aturley
+Bug-Bundle-Type: Application
+BUG-API-Version: 2.0.2
+Import-Package: org.freedesktop,
+ org.freedesktop.dbus,
+ org.freedesktop.dbus.exceptions,
+ org.osgi.framework
