@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-Vendor: dainterns
+Bug-Bundle-Type: Application
+Bundle-Version: 1.0.0
+BUG-API-Version: 2.0.2
+Bundle-Name: connect4
+Bundle-ManifestVersion: 2
+Bundle-Activator: connect4.Activator
+Bundle-SymbolicName: connect4
+Import-Package: com.buglabs.application,com.buglabs.bug.ircbot.pub,com
+ .buglabs.bug.module.lcd.pub,com.buglabs.bug.module.vonhippel.pub,com.
+ buglabs.util,gnu.io,javax.swing,org.osgi.framework,org.osgi.util.trac
+ ker
+
