@@ -153,17 +153,17 @@
 	                      swarms: ID,
 	                  callback: function(message) {        
 		        }});
-			var t=setInterval("sendMessage()",50);
+			var t=setInterval("sendMessage()",100);
 		}
 		
 		function sendMessage(){
 			navigator.geolocation.getCurrentPosition(success, fail);
 			if(togGPS && togACCEL)
-				SWARM.send('\"lat\": \"' + lat + '\" , \"lon\": \"' + lon+'\" , \"x\": \"' + accel.x + '\", \"y\": \"' + accel.y + '\", \"z\": \"' + accel.z+'\"'); 
+				SWARM.send({lat:lat, lon:lon, x:accel.x, y:accel.y, z:accel.z}); 
 			if(togGPS && !togACCEL)
-				SWARM.send('lat: ' + lat + ', lon: ' + lon); 
+				SWARM.send({lat:lat, lon:lon}); 
 			if(!togGPS && togACCEL)
-				SWARM.send('x: ' + accel.x + ', y: ' + accel.y + ', z: ' + accel.z); 
+				SWARM.send({x:accel.x, y:accel.y, z:accel.z}); 
 		}
 		
 	  </script>
