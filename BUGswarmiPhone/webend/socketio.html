@@ -1,0 +1,48 @@
+<html>
+    <head>
+	<script src="http://d1z10qq7obk1ve.cloudfront.net/swarm/test/swarm-v1.0.0.beta.js"></script>
+    </head>
+    <body>
+      	<script>
+	navigator.geolocation.getCurrentPosition(success, fail);
+	// success callback, gets passed position object
+	function success(position) // 'position' can be named anything
+	{	
+		alert("Your latitude: " + position.coords.latitude + "longitude: "
+ 			+ position.coords.longitude);
+	}
+	function fail(position)
+	{
+		alert("faillll rmb");
+	}
+
+	window.addEventListener( "devicemotion", onDeviceMotion, false );
+	function onDeviceMotion( event ) 
+	{
+
+		try {
+			var accel = event.accelerationIncludingGravity;
+			SWARM.send('x: ', accel.x);
+			SWARM.send('y: ', accel.y);
+			SWARM.send('z: ', accel.z);
+			console.log("x: " + accel.x + " y: " + accel.y + " z: " + accel.z);
+
+		}
+		catch (e)
+		{
+			console.log(e);
+		}
+			
+
+	}
+
+
+	SWARM.join({apikey: '0f6512f1f51dd194a15a63a5773f99d66a49be42', 
+                        swarms: '7de223a52dc1e690883fd6cd7cebe86024db3e46',
+                        callback: function(message) {
+                            console.log(Date.now() + ': ' + JSON.stringify(message)); 
+                        }
+            });
+	  </script>
+    </body>
+</html>

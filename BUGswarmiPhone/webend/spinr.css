@@ -1,0 +1,27 @@
+#myBall {
+  	width: 300px;
+  	height: 300px;
+  	
+  	-webkit-border-radius: 150px;
+-moz-border-radius: 150px;
+border-radius: 150px;
+}
+.start {
+  	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391));
+}
+.playing {
+  	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1E5799), color-stop(50%,#2989D8), color-stop(51%,#207cca), color-stop(100%,#7db9e8));
+}
+  .done {
+  	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF3236), color-stop(50%,#FF3033), color-stop(51%,#FF282C), color-stop(100%,#FF898B));
+}
+#score {
+  	position: absolute;
+  	bottom: 0px;
+  	left: 0px;
+  	width: 100%;
+  	text-align: center;
+}
+.hide {
+  	display: none;
+}
