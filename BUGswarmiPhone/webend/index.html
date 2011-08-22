@@ -24,6 +24,11 @@
 	var highscore = 0;
 	var score = 0;
 	var j;
+	var panda;
+	var s;
+
+	var API;
+	var ID;
 
 	var kscore = new Boolean();
 	kscore = false;
@@ -104,7 +109,7 @@
 	var ay = 0;
 	 
 	var delay = 10;
-	var vMultiplier = 0.01;
+	var vMultiplier = 0.2;
 
 	function update() {
 			vy = vy + -(ay);
@@ -127,7 +132,7 @@
 				x = (document.documentElement.clientWidth - 20 )/ 2; vx = 0; ax = 0; 
 				y = (document.documentElement.clientHeight - 20)/ 2; vy = 0; ay = 0; score = 0;}
 		
-			ball.style.backgroundColor = Math.floor(Math.random()*16777215).toString(16);
+			//ball.style.backgroundColor = Math.floor(Math.random()*16777215).toString(16);
 			ball.style.top = y + "px";
 			ball.style.left = x + "px";
 		}
@@ -136,18 +141,19 @@
 	
 
 		function joinSwarm(){
-			var API="fae2bf42003e78465abebb70524f5ce29bda83ac";
-			var ID="f8d31289f8f6db7d7a66a46d893e74bcaf9dbcc7";
+			API="fae2bf42003e78465abebb70524f5ce29bda83ac";
+			ID="f8d31289f8f6db7d7a66a46d893e74bcaf9dbcc7";
 			SWARM.join({apikey: API, swarms: ID, callback: function(message) {
 			j = JSON.stringify(message);		
 			console.log(Date.now() + ': ' + JSON.stringify(message));
-			var panda = eval('(' + j + ')');
-			document.getElementById("score").innerHTML = "x : " + j.x + 
-									", y : " + j.y +
-									", z : " + j.z;
-			//ax = j.x;
-			//ay = j.y;
-			//update();
+			panda = eval('(' + j + ')');
+			s = eval('(' + panda.message.body + ')');
+			document.getElementById("test").innerHTML = "x : " + s.x + 
+									", y : " + s.y +
+									", z : " + s.z;
+			ax = s.x;
+			ay = s.y;
+			update();
 
 			}
 		        }); 
@@ -156,7 +162,7 @@
 	</script>
     </head>
 	<body>
- 	<h1>If you let the ball touch an edge, this phone will implode.</h1>
+ 	<h1>If you let the ball touch an edge, your phone will implode.</h1>
 	<input type="button" onclick="prompter()" value="I want to input my apikey and swarmID YO">
 	<input type="button" onclick="showCookies()" value="Show me my saved cookies yo!">
 	<input type="button" onclick="keepScore()" value="Start keeping score yo!">
