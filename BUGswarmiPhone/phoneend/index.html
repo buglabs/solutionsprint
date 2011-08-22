@@ -1,0 +1,175 @@
+<html>
+    <head>
+	<script src="http://cdn.buglabs.net/swarm/swarm-v1.0.0.beta.min.js"></script>
+	<script src="http://fgnass.github.com/spin.js/spin.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+	<meta name="viewport" content="width=device-width,user-scalable=no" /> 
+    </head>
+    <body>
+	<h1 align="center">Swarmmmmmmmm</h1>
+
+	<div id="SPIN"></div>
+	<br></br>
+	<div id="GPS" align="center"></div>
+	<div id="ACCEL" align="center"></div>
+	<input type="button" onclick="toggle('GPS')" value="GPS">	
+	<input type="button" onclick="toggle('ACCEL')" value="Accel">
+	<input type="button" onclick="prompter()" value="SwarmCreds">
+	<input type="button" align="center" onclick="joinSwarm()" value="Swarmitup">
+      	<script>
+		//boolean toggle vars
+		var togGPS=true;
+		var togACCEL=true;
+		function toggle(elementID){
+		if(elementID=="GPS")
+			togGPS=!togGPS;
+		if(elementID=="ACCEL")
+			togACCEL=!togACCEL;
+		var target1 = document.getElementById(elementID)
+		if (target1.style.display == 'none') {
+			target1.style.display = 'block'
+		} else {
+			target1.style.display = 'none'
+		}
+		}
+
+		//get swarm info here plz
+		function prompter() {
+		var SWARMID = prompt("Yo, wats ur SWARMID?", "f8d31289f8f6db7d7a66a46d893e74bcaf9dbcc7");
+		createCookie("SWARMID", SWARMID, 7);
+		var APIKEY = prompt("APIKEY noob", "fae2bf42003e78465abebb70524f5ce29bda83ac");
+		createCookie("APIKEY", APIKEY, 7);
+		}
+
+		///COOOKIES
+		function showCookies() {
+		alert("SWARMID: " + readCookie("SWARMID") + " , APIKEY: " 
+			+ readCookie("APIKEY"));
+		}
+
+
+		function createCookie(name,value,days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+			}
+		else var expires = "";
+		document.cookie = name+"="+value+expires+"; path=/";
+		}
+
+		function readCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+
+		function eraseCookie(name) {
+			createCookie(name,"",-1);
+		}
+
+
+		//data to be sent to swarm
+		var lat;
+		var lon;
+		var accel;
+		
+		
+
+		//spinner stuffs
+		var opts = {
+		  lines: 12, // The number of lines to draw
+		  length: 12, // The length of each line
+		  width: 5, // The line thickness
+		  radius: 10, // The radius of the inner circle
+		  color: '#000', // #rbg or #rrggbb
+		  speed: 2.2, // Rounds per second
+		  trail: 100, // Afterglow percentage
+		  shadow: true // Whether to render a shadow
+		};
+		var target = document.getElementById('SPIN');
+		var spinner = new Spinner(opts).spin(target);
+		spinner.stop();
+
+
+		//start gps
+		navigator.geolocation.getCurrentPosition(success, fail);
+	
+		// success callback, gets passed position object
+		function success(position) // 'position' can be named anything
+		{	
+		//	alert("Your latitude: " + position.coords.latitude + "longitude: "
+ 		//	+ position.coords.longitude);
+			lat = position.coords.latitude; 
+			lon = position.coords.longitude;
+			document.getElementById('GPS').innerHTML="gps: "+ lat +" "+lon;
+		}
+		function fail(position)
+		{
+			alert("failll");
+		}
+		//accelerometer
+		window.addEventListener( "devicemotion", onDeviceMotion, false );
+		function onDeviceMotion( event ) 
+		{
+
+			try {
+				accel = event.accelerationIncludingGravity;
+
+				document.getElementById("ACCEL").innerHTML = 
+				"x: " + accel.x + " y: " + accel.y + " z: " + accel.z;
+
+			}
+			catch (e)
+			{
+				console.log(e);
+			}	
+			
+
+		}
+	
+
+		var API="fae2bf42003e78465abebb70524f5ce29bda83ac";
+		var ID="f8d31289f8f6db7d7a66a46d893e74bcaf9dbcc7";
+		function getCRED(){
+			if(readCookie("SWARMID")!="")
+				ID=readCookie("SWARMID");
+			if(readCookie("APIKEY")!="")
+				API=readCookie("APIKEY");
+			else			
+				console.log("Using default credentials");
+		}
+		
+		function joinSwarm(){
+			getCRED();
+			spinner.spin(target);
+			console.log("Joining swarm");
+			SWARM.join({apikey: API, 
+	                      swarms: ID,
+	                  callback: function(message) {        
+		        }});
+			var t=setInterval("sendMessage()",50);
+		}
+		
+		function sendMessage(){
+			navigator.geolocation.getCurrentPosition(success, fail);
+			if(togGPS && togACCEL)
+				SWARM.send('\"lat\": \"' + lat + '\" , \"lon\": \"' + lon+'\" , \"x\": \"' + accel.x + '\", \"y\": \"' + accel.y + '\", \"z\": \"' + accel.z+'\"'); 
+			if(togGPS && !togACCEL)
+				SWARM.send('lat: ' + lat + ', lon: ' + lon); 
+			if(!togGPS && togACCEL)
+				SWARM.send('x: ' + accel.x + ', y: ' + accel.y + ', z: ' + accel.z); 
+		}
+		
+	  </script>
+
+
+
+	<div id="data" style="font-size: 24pt" align="center"></div>
+    </body>
+</html>
