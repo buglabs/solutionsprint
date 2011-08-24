@@ -17,7 +17,22 @@
 </head>
 
 <body>
-
+<script>
+	//spinner stuffs
+		var opts = {
+		  lines: 12, // The number of lines to draw
+		  length: 12, // The length of each line
+		  width: 5, // The line thickness
+		  radius: 10, // The radius of the inner circle
+		  color: '#000', // #rbg or #rrggbb
+		  speed: 2.2, // Rounds per second
+		  trail: 100, // Afterglow percentage
+		  shadow: true // Whether to render a shadow
+		};
+		var target = document.getElementById('SPIN');
+		var spinner = new Spinner(opts).spin(target);
+		spinner.stop();
+	</script>
 
 <div id="topbar">
 	<div id="leftnav">
@@ -46,38 +61,23 @@
 		<span class="graytitle">Time Interval</span>
 		<ul class="pageitem">
 			<li class="select"><select name="d" id="time">
-			<option value="1">100 ms</option>
-			<option value="2">200 ms</option>
-			<option value="3">500 ms</option>
-			<option value="4">1000 ms</option>
+			<option value="1">1 seconds</option>
+			<option value="2">2 seconds</option>
+			<option value="3">5 seconds</option>
+			<option value="4">10 seconds</option>
 			</select><span class="arrow"></span> </li>
 			<li class="button">
-			<input name="Submit input" type="submit" value="Swarmitup" onclick="joinSwarm(); "/></li>
+			<input name="Submit input" type="submit" value="Swarmitup" onclick="spinner.spin(target);joinSwarm(); "/></li>
 		</ul>
 
 		</fieldset>
 
 </div>
-<div id="SPIN"><br></br><br></br></div>
-<script>
-	//spinner stuffs
-		var opts = {
-		  lines: 12, // The number of lines to draw
-		  length: 12, // The length of each line
-		  width: 5, // The line thickness
-		  radius: 10, // The radius of the inner circle
-		  color: '#000', // #rbg or #rrggbb
-		  speed: 2.2, // Rounds per second
-		  trail: 100, // Afterglow percentage
-		  shadow: true // Whether to render a shadow
-		};
-		var target = document.getElementById('SPIN');
-		var spinner = new Spinner(opts).spin(target);
-		spinner.stop();
-	</script>
+	
 <div id="footer">
 	<!-- Support iWebKit by sending us traffic; please keep this footer on your page, consider it a thank you for my work :-) -->
 	<a class="noeffect" href="http://snippetspace.com">iPhone site powered by iWebKit</a></div>
+<div id="SPIN"></div>
 </body>
 
 </html>
