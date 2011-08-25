@@ -121,7 +121,7 @@
 		var timeInt;
 
 		function setTimeInt(){
-			timeInt = document.getElementById('time').value*100;
+			timeInt = document.getElementById('time').value*1000;
 			console.log(timeInt);
 		}
 		var running = false;

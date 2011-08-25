@@ -1,7 +1,7 @@
 
 var map;
 var currentLocation;
-
+var swarm ={};
 function initialize() {
 	var latlng = new google.maps.LatLng(-34.397, 150.644);
     	var myOptions = {
@@ -10,22 +10,19 @@ function initialize() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
     	};
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	var polyOptions = {
-	    strokeColor: '#000000',
-	    strokeOpacity: 1.0,
-	    strokeWeight: 3
-	  }
-  	poly = new google.maps.Polyline(polyOptions);
-  	poly.setMap(map);
+	
+	
+  	
     	
 	}
 
 
 
 
-function update(lat,lon,time){
+function update(lat,lon,usr){
+	swarmUsr(usr);	
 	if(lat!=null){
-	var path = poly.getPath();
+	var path = swarm[usr].getPath();
 	var latlng = new google.maps.LatLng(lat, lon);
 	path.push(latlng);
 	var marker = new google.maps.Marker({
@@ -36,6 +33,22 @@ function update(lat,lon,time){
 		}); 
 	map.setCenter(latlng);
 	}}
+
+function swarmUsr(usr){
+	if(swarm[usr]==null){
+	var polyOptions = {
+	    strokeColor: '#000000',
+	    strokeOpacity: 1.0,
+	    strokeWeight: 3
+	  }
+	var poly = new google.maps.Polyline(polyOptions);
+  	poly.setMap(map);
+	swarm[usr]=poly;
+	console.log("added new swarm usr");
+	}
+	else
+		console.log("already in swarm");
+}
 var j;
 var panda;
 var s;
@@ -58,7 +71,7 @@ function joinSwarm(){
 		
 	console.log("Joining swarm");
 	var timeInt=3000*10;
-	var t=setInterval("update(s.lat,s.lon,panda.message.from)",timeInt);
+	//var t=setInterval("update(s.lat,s.lon,panda.message.from)",timeInt);
 	SWARM.join({apikey: API, 
 		swarms: ID,
 	        callback: function(message) {  
@@ -67,7 +80,7 @@ function joinSwarm(){
 			if (panda!=null && panda.message != null && panda.message.body != null && panda.message.body != "This room is not anonymous")
                 	{   
 			s = eval('(' + panda.message.body + ')');
-			//update(s.lat,s.lon,panda.message.from);     
+			update(s.lat,s.lon,panda.message.from);     
 		 } }});
 	
 	}
