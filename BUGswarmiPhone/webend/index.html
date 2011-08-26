@@ -5,179 +5,32 @@
     	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 	<meta name="viewport" content="width=device-width,user-scalable=no" /> 
 	<style> 
-	#no {
-		display: none;	
-	}
-	#ball {
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-	-webkit-radius: 10px;
-	background-color: green;
-	position:absolute;
-	top: 0px;
-	left: 0px;
-	}
+	div.ball {
+		width: 50px;
+		height: 50px;
+		border-radius: 25px;
+		-webkit-radius: 25px;
+		position:absolute;
+		background-color: green;
+		top: 0px;
+		left: 0px;
+		opacity: 100; }
 	</style> 
-	<script>
-	
-	var highscore = 0;
-	var score = 0;
-	var j;
-	var panda;
-	var s;
+	<script type="text/javascript" src="cookies.js"></script>
+	<script type="text/javascript" src="balls.js"></script>
+</head>
+<body> 
 
-	var API;
-	var ID;
-
-	var kscore = new Boolean();
-	kscore = false;
-
-	function prompter() {
-		var SWARMID = prompt("Yo, wats ur SWARMID?", "");
-		createCookie("SWARMID", SWARMID, 7);
-		var APIKEY = prompt("APIKEY noob", "");
-		createCookie("APIKEY", APIKEY, 7);
-	}
-
-	function showCookies() {
-		alert("SWARMID: " + readCookie("SWARMID") + " , APIKEY: " 
-			+ readCookie("APIKEY"));
-	}
-
-	window.addEventListener( "devicemotion", onDeviceMotion, false );
-	function onDeviceMotion( event ) 
-	{
-		try {
-			var accel = event.accelerationIncludingGravity;
-
-			//document.getElementById("data").innerHTML = 
-			//"x: " + accel.x + " y: " + accel.y + " z: " + accel.z;
-
-		}
-		catch (e)
-		{
-			console.log(e);
-		}
-	}
-
-
-	function createCookie(name,value,days) {
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
-		}
-		else var expires = "";
-		document.cookie = name+"="+value+expires+"; path=/";
-	}
-
-	function readCookie(name) {
-		var nameEQ = name + "=";
-		var ca = document.cookie.split(';');
-		for(var i=0;i < ca.length;i++) {
-			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-		}
-		return null;
-	}
-
-	function eraseCookie(name) {
-		createCookie(name,"",-1);
-	}
-
-	function keepScore() {
-		
-		if (score > highscore) { highscore = score; }
-		document.getElementById("score").innerHTML = "Score : " + score + " , High Score : " + highscore;
-		score++;
-		kscore = true;
-		t=setTimeout("keepScore()",1000);
-	}
-
-	// Position Variables
-	var x = (document.documentElement.clientWidth - 20 )/ 2;
-	var y = (document.documentElement.clientHeight - 20)/ 2;
-	 
-	// Speed - Velocity
-	var vx = 0;
-	var vy = 0;
-	 
-	// Acceleration
-	var ax = 0;
-	var ay = 0;
-	 
-	var delay = 10;
-	var vMultiplier = 0.2;
-
-	function update() {
-			vy = vy + -(ay);
-			vx = vx + ax;
-	 
-			var ball = document.getElementById("ball");
-			y = parseInt(y + vy * vMultiplier);
-			x = parseInt(x + vx * vMultiplier);
-
-			if (x<0) { //alert("IMPLOSION"); 
-				x = (document.documentElement.clientWidth - 20 )/ 2; vx = 0; ax = 0; 
-				y = (document.documentElement.clientHeight - 20)/ 2; vy = 0; ay = 0; score = 0;}
-			if (y<0) { //alert("IMPLOSION"); 
-				x = (document.documentElement.clientWidth - 20 )/ 2; vx = 0; ax = 0; 
-				y = (document.documentElement.clientHeight - 20)/ 2; vy = 0; ay = 0; score = 0;}
-			if (x>document.documentElement.clientWidth - 20) { //alert("IMPLOSION"); 
-				x = (document.documentElement.clientWidth - 20 )/ 2; vx = 0; ax = 0; 
-				y = (document.documentElement.clientHeight - 20)/ 2; vy = 0; ay = 0; score = 0;}
-			if (y>document.documentElement.clientHeight - 20) { //alert("IMPLOSION"); 
-				x = (document.documentElement.clientWidth - 20 )/ 2; vx = 0; ax = 0; 
-				y = (document.documentElement.clientHeight - 20)/ 2; vy = 0; ay = 0; score = 0;}
-		
-			//ball.style.backgroundColor = Math.floor(Math.random()*16777215).toString(16);
-			ball.style.top = y + "px";
-			ball.style.left = x + "px";
-		}
-
-
-	
-
-		function joinSwarm(){
-			API="fae2bf42003e78465abebb70524f5ce29bda83ac";
-			ID="f8d31289f8f6db7d7a66a46d893e74bcaf9dbcc7";
-			SWARM.join({apikey: API, swarms: ID, callback: function(message) {
-			j = JSON.stringify(message);		
-			console.log(Date.now() + ': ' + JSON.stringify(message));
-			panda = eval('(' + j + ')');
-			s = eval('(' + panda.message.body + ')');
-			document.getElementById("test").innerHTML = "x : " + s.x + 
-									", y : " + s.y +
-									", z : " + s.z;
-			ax = s.x;
-			ay = s.y;
-			update();
-
-			}
-		        }); 
-		}
-	
-	</script>
-    </head>
-	<body>
  	<h1>If you let the ball touch an edge, your phone will implode.</h1>
 	<input type="button" onclick="prompter()" value="I want to input my apikey and swarmID YO">
 	<input type="button" onclick="showCookies()" value="Show me my saved cookies yo!">
-	<input type="button" onclick="keepScore()" value="Start keeping score yo!">
 	<input type="button" onclick="joinSwarm()" value="Join Swarm">
-	<div id="data" style="font-size: 24pt" align="center"></div>
 
-	<div id="content"> 
-    	<div id="yes"> 
+	<div id="content">
         <p>Mantain your device in portrait orientation for better results (you can lock it)</p> 
-        <div id="ball"></div> 
-    	</div> 
-    	<div id="no"></div> 
-	<div id="score"></div>
 	<div id="test"></div>
-	</div> 
+	<div id="data"></div>
+	</div>
 
-    </body>
+</body>
 </html>

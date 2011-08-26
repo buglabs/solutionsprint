@@ -6,13 +6,13 @@
 	var API;
 	var ID;
 
-	var Ball = function(uiRep, id) {
+	var Ball = function(uiRep, id, xc, yc) {
 	    	this.uiRep = uiRep; //the css element
 	    	this.id = id;
 
 		// Position Variables
-		this.x = (document.documentElement.clientWidth - 20 )/ 2;
-		this.y = (document.documentElement.clientHeight - 20)/ 2;
+		this.x = xc;
+		this.y = yc;
 	 
 		// Speed - Velocity
 		this.vx = 0;
@@ -22,13 +22,46 @@
 		this.ax = 0;
 		this.ay = 0;
 
-		this.vMultiplier = 0.2;
+		// Velocity Multiplier
+		this.vMultiplier = 0.1;
 	};
-		
-	Ball.prototype.getId = function() { return this.id; }
 
 	function checkCollision() {
-		console.log("implosion!");
+		for (var key in Balls)
+		{
+			var ball = Balls[key];
+			for (var key2 in Balls)
+			{
+				if (key2 != key)
+				{
+					var ball2 = Balls[key2];
+					if (Math.sqrt(Math.pow(Math.abs(ball2.x - ball.x), 2) 
+						+ Math.pow(Math.abs(ball2.y - ball.y), 2)) < 50 )
+					{
+						if (ball.id > ball2.id)
+						{
+							console.log("collision!");
+							Balls[key].vx = -(ball.vx / 2);
+							Balls[key].vy = -(ball.vy / 2);
+							Balls[key2].vx = -(ball2.vx / 2);
+							Balls[key2].vy = -(ball2.vy / 2);
+							Balls[key].ax = 0;
+							Balls[key].ay = 0;
+							Balls[key2].ax = 0;
+							Balls[key2].ay = 0;
+							console.log(Balls[key].vx);
+							console.log(Balls[key].vy);
+							console.log(Balls[key2].vx);
+							console.log(Balls[key2].vy);
+//Balls[key].uiRep.style.top = Math.floor(Math.random()*(document.documentElement.clientHeight - 50));
+//Balls[key2].uiRep.style.top = Math.floor(Math.random()*(document.documentElement.clientHeight - 50));
+//Balls[key].uiRep.style.left = Math.floor(Math.random()*(document.documentElement.clientWidth - 50));
+//Balls[key2].uiRep.style.left = Math.floor(Math.random()*(document.documentElement.clientWidth - 50));
+						}
+					}
+				}
+			}
+		}
 	}
 
 
@@ -43,19 +76,21 @@
 				ball.y = parseInt(ball.y + ball.vy * ball.vMultiplier);
 				ball.x = parseInt(ball.x + ball.vx * ball.vMultiplier);
 
-				if (ball.x<0 || ball.y<0 || ball.x>document.documentElement.clientWidth - 20 || 				  			ball.y>document.documentElement.clientHeight - 20) 
+				if (ball.x<0 || ball.y<0 || ball.x>document.documentElement.clientWidth - 50 || 				  			ball.y>document.documentElement.clientHeight - 50) 
 					{ 
-					ball.x = (document.documentElement.clientWidth - 20)/ 2; ball.vx = 0; ball.ax = 0; 
-					ball.y = (document.documentElement.clientHeight - 20)/ 2; ball.vy = 0; ball.ay = 0
+					ball.vx = -(ball.vx / 2); ball.ax = 0; 
+					ball.vy = -(ball.vy / 2); ball.ay = 0;
 					}
 
 				ball.uiRep.style.top = ball.y + "px";
-				ball.uiRep.style.left = ball.x + "px";
+				ball.uiRep.style.left = ball.x + "px";;
+
 				//console.log(ball.uiRep.style.top);
 				//console.log(ball.uiRep.style.left);
 
 				
 			}
+			checkCollision();
 			t = setTimeout("update()", 50);
 		}
 
@@ -82,12 +117,13 @@
 					d.setAttribute("id", browserID); 
 					d.setAttribute("class", "ball");
 					d.style.backgroundColor = Math.floor(Math.random()*16777215).toString(16);
+					var x = Math.floor(Math.random()*(document.documentElement.clientWidth - 50));
+					var y = Math.floor(Math.random()*(document.documentElement.clientHeight - 50));
+					d.style.top = y;
+					d.style.left = x;
 					document.getElementById('data').appendChild(d);
-					var b = new Ball(d, browserID);
+					var b = new Ball(d, browserID, x, y);
 					Balls[browserID] = b;
-					console.log(Balls[browserID].uiRep.style);
-					console.log(Balls[browserID].vy);
-					console.log(Balls[browserID].vx);
 					console.log("added ball!");
 				}
 
@@ -109,7 +145,7 @@
 				{				
 					if (panda.presence.type == "unavailable")
 					{
-						//Balls[browserID].uiRep.style.opacity = 0;
+						Balls[browserID].uiRep.style.opacity = 0;
 					}
 					else
 					{
